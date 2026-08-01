@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar-container">
+            <!-- Logo -->
+            <a href="{% url 'applications:home' %}" class="logo">
+                <span class="logo-icon">📋</span>
+                <span>Application Assistant</span>
+            </a>
+            <!-- Main Navigation -->
+            <nav class="nav-links">
+                <a href="{% url 'applications:home' %}">
+                    Dashboard
+                </a>
+                <a href="#">
+                    Applications
+                </a>
+                <a href="#">
+                    Analytics
+                </a>
+                <a href="#">
+                    Resume AI
+                </a>
+                <a href="#">
+                    Settings
+                </a>
+            </nav>
+            <!-- Right Side -->
+            <div class="navbar-right">
+                <input
+                    type="search"
+                    placeholder="Search..."
+                    class="navbar-search"
+                >
+                {% if user.is_authenticated %}
+                    <div class="user-menu">
+                        <div class="avatar">
+                            {{ user.username|first|upper }}
+                        </div>
+                        <span class="welcome-text">
+                            {{ user.username }}
+                        </span>
+                        <form
+                            action="{% url 'logout' %}"
+                            method="post"
+                            class="logout-form"
+                        >
+                            {% csrf_token %}
+                            <button
+                                type="submit"
+                                class="logout-button"
+                            >
+                                Log Out
+                            </button>
+                        </form>
+                    </div>
+                {% else %}
+                    <a
+                        href="{% url 'login' %}"
+                        class="login-button"
+                    >
+                        Log In
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
