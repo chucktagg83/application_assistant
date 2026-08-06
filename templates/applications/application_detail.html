@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ application.position }}
+{% endblock %}
+
+{% block content %}
+
+<section class="application-detail-page">
+
+    <div class="detail-header">
+
+        <div>
+            <p class="company-name">
+                {{ application.company }}
+            </p>
+
+            <h1>
+                {{ application.position }}
+            </h1>
+
+            <span class="status-badge">
+                {{ application.get_status_display }}
+            </span>
+        </div>
+
+        <div class="detail-actions">
+
+            <a
+                href="{% url 'applications:application-update' application.pk %}"
+                class="primary-button"
+            >
+                Edit Application
+            </a>
+
+            <a
+                href="{% url 'applications:application-list' %}"
+                class="secondary-button"
+            >
+                Back to Applications
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="detail-grid">
+
+        <article class="detail-card">
+            <h2>Application Information</h2>
+
+            <p>
+                <strong>Location:</strong>
+                {{ application.location|default:"Not provided" }}
+            </p>
+
+            <p>
+                <strong>Salary:</strong>
+                {{ application.salary|default:"Not provided" }}
+            </p>
+
+            <p>
+                <strong>Applied:</strong>
+                {{ application.applied_date|default:"Not provided" }}
+            </p>
+
+            <p>
+                <strong>Follow-up:</strong>
+                {{ application.follow_up_date|default:"Not scheduled" }}
+            </p>
+        </article>
+
+        <article class="detail-card">
+            <h2>Contact Information</h2>
+
+            <p>
+                <strong>Name:</strong>
+                {{ application.contact_name|default:"Not provided" }}
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                {{ application.contact_email|default:"Not provided" }}
+            </p>
+
+            {% if application.job_url %}
+                <a
+                    href="{{ application.job_url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Open Job Posting
+                </a>
+            {% endif %}
+        </article>
+
+        <article class="detail-card notes-card">
+            <h2>Notes</h2>
+
+            <p>
+                {{ application.notes|default:"No notes added."|linebreaks }}
+            </p>
+        </article>
+
+    </div>
+
+</section>
+
+{% endblock %}

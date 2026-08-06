@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Application Form
+{% endblock %}
+
+{% block content %}
+
+<section class="form-page">
+
+    <div class="application-form-card">
+
+        {% if object %}
+            <h1>Edit Application</h1>
+        {% else %}
+            <h1>Create Application</h1>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Save Application
+                </button>
+
+                <a
+                    href="{% url 'applications:application-list' %}"
+                    class="secondary-button"
+                >
+                    Cancel
+                </a>
+
+            </div>
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

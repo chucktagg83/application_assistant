@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+    My Applications
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/application_list.css' %}">
+
+<section class="application-page">
+
+    <div class="page-heading">
+        <div>
+            <h1>My Applications</h1>
+
+            <p>
+                Track every job opportunity in one place.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'applications:application-create' %}"
+            class="primary-button"
+        >
+            + Add Application
+        </a>
+    </div>
+
+    {% if applications %}
+
+        <div class="application-grid">
+
+            {% for application in applications %}
+
+                <a
+                    href="{% url 'applications:application-detail' application.pk %}"
+                    class="application-card"
+                >
+                    <div class="application-card-header">
+                        <div>
+                            <h2>
+                                {{ application.position }}
+                            </h2>
+
+                            <p>
+                                {{ application.company }}
+                            </p>
+                        </div>
+
+                        <span class="status-badge">
+                            {{ application.get_status_display }}
+                        </span>
+                    </div>
+
+                    {% if application.location %}
+                        <p>
+                            {{ application.location }}
+                        </p>
+                    {% endif %}
+
+                    {% if application.applied_date %}
+                        <p>
+                            Applied:
+                            {{ application.applied_date }}
+                        </p>
+                    {% endif %}
+
+                    <span class="view-details">
+                        View Details →
+                    </span>
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+            <h2>No applications yet</h2>
+
+            <p>
+                Add your first job application to begin tracking your search.
+            </p>
+
+            <a
+                href="{% url 'applications:application-create' %}"
+                class="primary-button"
+            >
+                Create Application
+            </a>
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

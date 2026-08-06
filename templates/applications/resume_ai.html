@@ -1,0 +1,341 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Resume AI
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/resume_ai.css' %}">
+
+<section class="resume-ai-page">
+
+    <header class="resume-ai-heading">
+        <p class="resume-ai-eyebrow">
+            Intelligent resume tailoring
+        </p>
+
+        <h1>Resume AI</h1>
+
+        <p>
+            Paste the job requirements and your current resume.
+            Application Assistant will create a targeted, ATS-friendly
+            version without inventing qualifications.
+        </p>
+    </header>
+
+
+    {% if messages %}
+        <div class="resume-ai-messages">
+
+            {% for message in messages %}
+                <div class="resume-alert {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+        </div>
+    {% endif %}
+
+
+    <form method="post" class="resume-ai-form">
+        {% csrf_token %}
+
+        <div class="resume-input-grid">
+
+            <section class="resume-input-card">
+
+                <div class="input-card-heading">
+                    <span class="step-number">1</span>
+
+                    <div>
+                        <h2>Job Requirements</h2>
+
+                        <p>
+                            Paste the complete job posting and required
+                            qualifications.
+                        </p>
+                    </div>
+                </div>
+
+                {{ form.job_requirements }}
+
+                {% for error in form.job_requirements.errors %}
+                    <small class="field-error">
+                        {{ error }}
+                    </small>
+                {% endfor %}
+
+            </section>
+
+
+            <section class="resume-input-card">
+
+                <div class="input-card-heading">
+                    <span class="step-number">2</span>
+
+                    <div>
+                        <h2>Current Resume</h2>
+
+                        <p>
+                            Paste the resume you want to tailor.
+                        </p>
+                    </div>
+                </div>
+
+                {{ form.current_resume }}
+
+                {% for error in form.current_resume.errors %}
+                    <small class="field-error">
+                        {{ error }}
+                    </small>
+                {% endfor %}
+
+            </section>
+
+        </div>
+
+
+        <section class="resume-options-card">
+
+            <div class="resume-style-field">
+                <label for="{{ form.target_style.id_for_label }}">
+                    Resume Style
+                </label>
+
+                {{ form.target_style }}
+            </div>
+
+            <div class="privacy-note">
+                <strong>Before submitting:</strong>
+
+                Remove sensitive information you do not want sent to
+                the AI service, such as your full address, Social
+                Security number, or unrelated personal details.
+            </div>
+
+        </section>
+
+
+        <div class="resume-ai-actions">
+
+            <button
+                type="submit"
+                class="generate-resume-button"
+            >
+                Generate Tailored Resume
+            </button>
+
+            <button
+                type="reset"
+                class="clear-resume-button"
+            >
+                Clear Form
+            </button>
+
+        </div>
+
+    </form>
+
+
+   {% if analysis %}
+
+    <section class="resume-analysis-section">
+
+        <div class="analysis-heading">
+            <div>
+                <p class="resume-ai-eyebrow">
+                    Resume analysis
+                </p>
+
+                <h2>Your Job Match Results</h2>
+            </div>
+        </div>
+
+
+        <!-- SCORE CARDS -->
+
+        <div class="score-grid">
+
+            <article class="score-card match-score-card">
+
+                <span class="score-label">
+                    Match Score
+                </span>
+
+                <strong>
+                    {{ analysis.match_score }}%
+                </strong>
+
+                <div class="score-progress">
+                    <div
+                        class="score-progress-fill"
+                        style="width: {{ analysis.match_score }}%;"
+                    ></div>
+                </div>
+
+                <p>
+                    Overall alignment between the resume
+                    and job requirements.
+                </p>
+
+            </article>
+
+
+            <article class="score-card keyword-score-card">
+
+                <span class="score-label">
+                    Keyword Coverage
+                </span>
+
+                <strong>
+                    {{ analysis.keyword_coverage }}%
+                </strong>
+
+                <div class="score-progress">
+                    <div
+                        class="score-progress-fill"
+                        style="width: {{ analysis.keyword_coverage }}%;"
+                    ></div>
+                </div>
+
+                <p>
+                    Important job keywords supported by
+                    the current resume.
+                </p>
+
+            </article>
+
+        </div>
+
+
+        <!-- MATCH SUMMARY -->
+
+        <article class="analysis-card summary-card">
+
+            <h3>Match Summary</h3>
+
+            <p>
+                {{ analysis.match_summary }}
+            </p>
+
+        </article>
+
+
+        <!-- MATCH DETAILS -->
+
+        <div class="analysis-grid">
+
+            <article class="analysis-card strong-match-card">
+
+                <h3>Strong Matches</h3>
+
+                {% if analysis.strong_matches %}
+                    <ul>
+                        {% for item in analysis.strong_matches %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No strong matches were identified.</p>
+                {% endif %}
+
+            </article>
+
+
+            <article class="analysis-card missing-card">
+
+                <h3>Missing or Unverified Requirements</h3>
+
+                {% if analysis.missing_requirements %}
+                    <ul>
+                        {% for item in analysis.missing_requirements %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>
+                        No major missing requirements were identified.
+                    </p>
+                {% endif %}
+
+            </article>
+
+
+            <article class="analysis-card keyword-card">
+
+                <h3>Suggested Keywords</h3>
+
+                {% if analysis.suggested_keywords %}
+                    <div class="keyword-chip-list">
+
+                        {% for keyword in analysis.suggested_keywords %}
+                            <span class="keyword-chip">
+                                {{ keyword }}
+                            </span>
+                        {% endfor %}
+
+                    </div>
+                {% else %}
+                    <p>No additional keywords were suggested.</p>
+                {% endif %}
+
+            </article>
+
+
+            <article class="analysis-card talking-points-card">
+
+                <h3>Interview Talking Points</h3>
+
+                {% if analysis.interview_talking_points %}
+                    <ul>
+                        {% for item in analysis.interview_talking_points %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No talking points were generated.</p>
+                {% endif %}
+
+            </article>
+
+        </div>
+
+
+        <!-- TAILORED RESUME -->
+
+        <section class="resume-result-section">
+
+            <div class="result-heading">
+
+                <div>
+                    <p class="resume-ai-eyebrow">
+                        Generated result
+                    </p>
+
+                    <h2>Your Tailored Resume</h2>
+                </div>
+
+                <button
+                    type="button"
+                    id="copyResumeButton"
+                    class="copy-resume-button"
+                >
+                    Copy Resume
+                </button>
+
+            </div>
+
+            <div
+                id="generatedResume"
+                class="generated-resume"
+            >{{ analysis.tailored_resume }}</div>
+
+        </section>
+
+    </section>
+
+    {% endif %}
+
+{% endblock %}

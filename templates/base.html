@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
@@ -22,16 +21,30 @@
                 <a href="{% url 'applications:home' %}">
                     Dashboard
                 </a>
-                <a href="#">
-                    Applications
-                </a>
-                <a href="#">
+                <div class="nav-dropdown">
+                    <button
+                        type="button"
+                        class="dropdown-toggle"
+                    >
+                        Applications
+                        <span>▾</span>
+                    </button>
+                    <div class="dropdown-menu">
+                         <a href="{% url 'applications:application-create' %}">
+                            Create Application
+                        </a>
+                        <a href="{% url 'applications:application-list' %}">
+                            View Applications
+                        </a>
+                    </div>
+                </div>
+                <a href="{% url 'applications:analytics' %}">
                     Analytics
                 </a>
-                <a href="#">
+                <a href="{% url 'applications:resume-ai' %}">
                     Resume AI
                 </a>
-                <a href="#">
+                <a href="{% url 'applications:settings' %}">
                     Settings
                 </a>
             </nav>

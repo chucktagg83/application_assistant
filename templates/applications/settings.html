@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Settings
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/settings.css' %}">
+
+<section class="settings-page">
+
+    <header class="settings-heading">
+        <p class="settings-eyebrow">
+            Account preferences
+        </p>
+
+        <h1>Settings</h1>
+
+        <p>
+            Manage your account information and application preferences.
+        </p>
+    </header>
+
+
+    {% if messages %}
+        <div class="settings-messages">
+
+            {% for message in messages %}
+                <div class="settings-alert {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+        </div>
+    {% endif %}
+
+
+    <form method="post" class="settings-form">
+        {% csrf_token %}
+
+        <section class="settings-card">
+
+            <div class="settings-card-heading">
+                <h2>Profile Information</h2>
+
+                <p>
+                    Update the personal information connected to your account.
+                </p>
+            </div>
+
+            <div class="settings-grid">
+
+                <div class="settings-field">
+                    <label for="{{ profile_form.username.id_for_label }}">
+                        Username
+                    </label>
+
+                    {{ profile_form.username }}
+
+                    {% for error in profile_form.username.errors %}
+                        <small class="field-error">
+                            {{ error }}
+                        </small>
+                    {% endfor %}
+                </div>
+
+
+                <div class="settings-field">
+                    <label for="{{ profile_form.email.id_for_label }}">
+                        Email
+                    </label>
+
+                    {{ profile_form.email }}
+
+                    {% for error in profile_form.email.errors %}
+                        <small class="field-error">
+                            {{ error }}
+                        </small>
+                    {% endfor %}
+                </div>
+
+
+                <div class="settings-field">
+                    <label for="{{ profile_form.first_name.id_for_label }}">
+                        First Name
+                    </label>
+
+                    {{ profile_form.first_name }}
+                </div>
+
+
+                <div class="settings-field">
+                    <label for="{{ profile_form.last_name.id_for_label }}">
+                        Last Name
+                    </label>
+
+                    {{ profile_form.last_name }}
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="settings-card">
+
+            <div class="settings-card-heading">
+                <h2>Application Preferences</h2>
+
+                <p>
+                    Control reminders and stale application tracking.
+                </p>
+            </div>
+
+
+            <div class="settings-preference-row">
+
+                <div>
+                    <strong>Email Reminders</strong>
+
+                    <p>
+                        Receive reminders about applications that
+                        may need follow-up.
+                    </p>
+                </div>
+
+                <label class="toggle-switch">
+                    {{ settings_form.email_reminders }}
+
+                    <span class="toggle-slider"></span>
+                </label>
+
+            </div>
+
+
+            <div class="settings-field stale-days-field">
+
+                <label for="{{ settings_form.stale_application_days.id_for_label }}">
+                    Days Before an Application Needs Attention
+                </label>
+
+                {{ settings_form.stale_application_days }}
+
+                <small>
+                    The dashboard will flag active applications after
+                    this many days without an update.
+                </small>
+
+                {% for error in settings_form.stale_application_days.errors %}
+                    <small class="field-error">
+                        {{ error }}
+                    </small>
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+        <section class="settings-card">
+
+            <div class="settings-card-heading">
+                <h2>Account Security</h2>
+
+                <p>
+                    Manage your password and account security.
+                </p>
+            </div>
+
+            <div class="security-row">
+
+                <div>
+                    <strong>Password</strong>
+
+                    <p>
+                        Change your password using Django's secure
+                        password update form.
+                    </p>
+                </div>
+
+                <a
+                    href="{% url 'password_change' %}"
+                    class="secondary-settings-button"
+                >
+                    Change Password
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <div class="settings-actions">
+
+            <button
+                type="submit"
+                class="save-settings-button"
+            >
+                Save Changes
+            </button>
+
+            <a
+                href="{% url 'applications:home' %}"
+                class="cancel-settings-button"
+            >
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</section>
+
+{% endblock %}
