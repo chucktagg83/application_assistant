@@ -2,7 +2,7 @@ from datetime import timedelta
 import json
 from urllib import request
 
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -210,9 +210,60 @@ class ApplicationListView(
     context_object_name = "applications"
 
     def get_queryset(self):
-        return JobApplication.objects.filter(
+        queryset = JobApplication.objects.filter(
             user=self.request.user
         )
+
+        query = self.request.GET.get(
+            "query",
+            "",
+        ).strip()
+
+        if query:
+            queryset = queryset.filter(
+                Q(company__icontains=query)
+                | Q(position__icontains=query)
+                | Q(location__icontains=query)
+                | Q(status__icontains=query)
+            )
+
+        return queryset.order_by("-created_at")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        all_applications = JobApplication.objects.filter(
+            user=self.request.user
+        )
+
+        context["total_applications"] = (
+            all_applications.count()
+        )
+
+        context["interview_count"] = (
+            all_applications.filter(
+                status="interview"
+            ).count()
+        )
+
+        context["offer_count"] = (
+            all_applications.filter(
+                status="offer"
+            ).count()
+        )
+
+        context["rejected_count"] = (
+            all_applications.filter(
+                status="rejected"
+            ).count()
+        )
+
+        context["query"] = self.request.GET.get(
+            "query",
+            "",
+        ).strip()
+
+        return context
 
 
 class ApplicationCreateView(

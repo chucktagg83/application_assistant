@@ -1,17 +1,67 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block title %}
     {{ application.position }}
 {% endblock %}
 
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'css/application-detail.css' %}"
+>
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/application-shared.css' %}"
+>
+{% endblock %}
+
 {% block content %}
 
-<section class="application-detail-page">
 
-    <div class="detail-header">
+<section class="application-page">
 
-        <div>
-            <p class="company-name">
+    <!-- APPLICATION NAVIGATION -->
+
+    <nav class="application-tabs">
+
+        <a
+            href="{% url 'applications:application-list' %}"
+            class="application-tab"
+        >
+            All Applications
+        </a>
+
+        <a
+            href="{% url 'applications:application-create' %}"
+            class="application-tab"
+        >
+            Create Application
+        </a>
+
+        <a
+            href="{% url 'applications:application-detail' application.pk %}"
+            class="application-tab active"
+        >
+            Application Details
+        </a>
+
+    </nav>
+
+
+    <!-- DETAIL HEADER -->
+
+    <header class="application-detail-header">
+
+        <div class="application-detail-title">
+
+            <p class="application-eyebrow">
+                Application details
+            </p>
+
+            <p class="detail-company">
                 {{ application.company }}
             </p>
 
@@ -19,87 +69,206 @@
                 {{ application.position }}
             </h1>
 
-            <span class="status-badge">
-                {{ application.get_status_display }}
-            </span>
+            <div class="detail-header-meta">
+
+                <span class="status-badge status-{{ application.status }}">
+                    {{ application.get_status_display }}
+                </span>
+
+                {% if application.location %}
+                    <span class="detail-location">
+                        {{ application.location }}
+                    </span>
+                {% endif %}
+
+            </div>
+
         </div>
+
 
         <div class="detail-actions">
 
             <a
                 href="{% url 'applications:application-update' application.pk %}"
-                class="primary-button"
+                class="edit-application-button"
             >
                 Edit Application
             </a>
 
             <a
                 href="{% url 'applications:application-list' %}"
-                class="secondary-button"
+                class="back-applications-button"
             >
                 Back to Applications
             </a>
 
         </div>
 
-    </div>
+    </header>
 
-    <div class="detail-grid">
 
-        <article class="detail-card">
-            <h2>Application Information</h2>
+    <!-- DETAIL CONTENT -->
 
-            <p>
-                <strong>Location:</strong>
-                {{ application.location|default:"Not provided" }}
-            </p>
+    <div class="application-detail-grid">
 
-            <p>
-                <strong>Salary:</strong>
-                {{ application.salary|default:"Not provided" }}
-            </p>
+        <!-- APPLICATION INFORMATION -->
 
-            <p>
-                <strong>Applied:</strong>
-                {{ application.applied_date|default:"Not provided" }}
-            </p>
+        <article class="application-detail-card">
 
-            <p>
-                <strong>Follow-up:</strong>
-                {{ application.follow_up_date|default:"Not scheduled" }}
-            </p>
+            <div class="detail-card-heading">
+                <span class="detail-card-number">1</span>
+
+                <div>
+                    <h2>Application Information</h2>
+
+                    <p>
+                        Main details about this opportunity.
+                    </p>
+                </div>
+            </div>
+
+            <dl class="detail-data-list">
+
+                <div class="detail-data-row">
+                    <dt>Company</dt>
+                    <dd>{{ application.company }}</dd>
+                </div>
+
+                <div class="detail-data-row">
+                    <dt>Position</dt>
+                    <dd>{{ application.position }}</dd>
+                </div>
+
+                <div class="detail-data-row">
+                    <dt>Location</dt>
+                    <dd>
+                        {{ application.location|default:"Not provided" }}
+                    </dd>
+                </div>
+
+                <div class="detail-data-row">
+                    <dt>Salary</dt>
+                    <dd>
+                        {{ application.salary|default:"Not provided" }}
+                    </dd>
+                </div>
+
+                <div class="detail-data-row">
+                    <dt>Applied Date</dt>
+                    <dd>
+                        {% if application.applied_date %}
+                            {{ application.applied_date|date:"F j, Y" }}
+                        {% else %}
+                            Not provided
+                        {% endif %}
+                    </dd>
+                </div>
+
+                <div class="detail-data-row">
+                    <dt>Follow-Up Date</dt>
+                    <dd>
+                        {% if application.follow_up_date %}
+                            {{ application.follow_up_date|date:"F j, Y" }}
+                        {% else %}
+                            Not scheduled
+                        {% endif %}
+                    </dd>
+                </div>
+
+            </dl>
+
         </article>
 
-        <article class="detail-card">
-            <h2>Contact Information</h2>
 
-            <p>
-                <strong>Name:</strong>
-                {{ application.contact_name|default:"Not provided" }}
-            </p>
+        <!-- CONTACT INFORMATION -->
 
-            <p>
-                <strong>Email:</strong>
-                {{ application.contact_email|default:"Not provided" }}
-            </p>
+        <article class="application-detail-card">
 
-            {% if application.job_url %}
-                <a
-                    href="{{ application.job_url }}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Open Job Posting
-                </a>
-            {% endif %}
+            <div class="detail-card-heading">
+                <span class="detail-card-number">2</span>
+
+                <div>
+                    <h2>Contact Information</h2>
+
+                    <p>
+                        Recruiter or hiring manager details.
+                    </p>
+                </div>
+            </div>
+
+            <dl class="detail-data-list">
+
+                <div class="detail-data-row">
+                    <dt>Contact Name</dt>
+                    <dd>
+                        {{ application.contact_name|default:"Not provided" }}
+                    </dd>
+                </div>
+
+                <div class="detail-data-row">
+                    <dt>Contact Email</dt>
+                    <dd>
+                        {% if application.contact_email %}
+                            <a href="mailto:{{ application.contact_email }}">
+                                {{ application.contact_email }}
+                            </a>
+                        {% else %}
+                            Not provided
+                        {% endif %}
+                    </dd>
+                </div>
+
+                <div class="detail-data-row">
+                    <dt>Job Posting</dt>
+                    <dd>
+                        {% if application.job_url %}
+                            <a
+                                href="{{ application.job_url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="job-posting-link"
+                            >
+                                Open Job Posting
+                            </a>
+                        {% else %}
+                            Not provided
+                        {% endif %}
+                    </dd>
+                </div>
+
+            </dl>
+
         </article>
 
-        <article class="detail-card notes-card">
-            <h2>Notes</h2>
 
-            <p>
-                {{ application.notes|default:"No notes added."|linebreaks }}
-            </p>
+        <!-- NOTES -->
+
+        <article class="application-detail-card detail-notes-card">
+
+            <div class="detail-card-heading">
+                <span class="detail-card-number">3</span>
+
+                <div>
+                    <h2>Application Notes</h2>
+
+                    <p>
+                        Requirements, updates, and follow-up information.
+                    </p>
+                </div>
+            </div>
+
+            <div class="detail-notes-content">
+
+                {% if application.notes %}
+                    {{ application.notes|linebreaks }}
+                {% else %}
+                    <p class="empty-detail-text">
+                        No notes have been added.
+                    </p>
+                {% endif %}
+
+            </div>
+
         </article>
 
     </div>

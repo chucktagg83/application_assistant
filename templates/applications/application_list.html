@@ -6,71 +6,223 @@
     My Applications
 {% endblock %}
 
-{% block content %}
+{% block extra_css %}
+    <link 
+    rel="stylesheet" 
+    href="{% static 'css/application_list.css' %}"
+    >
 
-<link rel="stylesheet" href="{% static 'css/application_list.css' %}">
+    <link
+    rel="stylesheet"
+    href="{% static 'css/application-shared.css' %}"
+    >
+{% endblock %}
+
+{% block content %}
 
 <section class="application-page">
 
-    <div class="page-heading">
+    <!-- PAGE HEADING -->
+
+    <header class="application-heading">
         <div>
-            <h1>My Applications</h1>
+            <p class="application-eyebrow">
+                Job search management
+            </p>
+
+            <h1>Applications</h1>
 
             <p>
-                Track every job opportunity in one place.
+                Track your opportunities, interviews, offers,
+                and follow-up activity.
             </p>
         </div>
 
         <a
             href="{% url 'applications:application-create' %}"
-            class="primary-button"
+            class="application-primary-button"
         >
-            + Add Application
+            + New Application
         </a>
+    </header>
+
+
+    <!-- APPLICATION TABS -->
+
+    <nav class="application-tabs">
+
+        <a
+            href="{% url 'applications:application-list' %}"
+            class="application-tab active"
+        >
+            All Applications
+        </a>
+
+        <a
+            href="{% url 'applications:application-create' %}"
+            class="application-tab"
+        >
+            Create Application
+        </a>
+
+        <span
+            class="application-tab disabled"
+            title="Select an application to view its details."
+        >
+            Application Details
+        </span>
+
+    </nav>
+
+
+    <!-- STATISTICS -->
+
+    <section class="application-stats">
+
+        <article class="application-stat-card">
+            <span>Total Applications</span>
+
+            <strong>
+                {{ total_applications }}
+            </strong>
+
+            <small>
+                All tracked opportunities
+            </small>
+        </article>
+
+
+        <article class="application-stat-card interview-stat">
+            <span>Interviews</span>
+
+            <strong>
+                {{ interview_count }}
+            </strong>
+
+            <small>
+                Active interview stage
+            </small>
+        </article>
+
+
+        <article class="application-stat-card offer-stat">
+            <span>Offers</span>
+
+            <strong>
+                {{ offer_count }}
+            </strong>
+
+            <small>
+                Offers received
+            </small>
+        </article>
+
+
+        <article class="application-stat-card rejected-stat">
+            <span>Rejected</span>
+
+            <strong>
+                {{ rejected_count }}
+            </strong>
+
+            <small>
+                Closed opportunities
+            </small>
+        </article>
+
+    </section>
+
+
+    <!-- LIST HEADING -->
+
+    <div class="application-list-heading">
+
+        <div>
+            <h2>All Applications</h2>
+
+            <p>
+                Select an application to view its complete details.
+            </p>
+        </div>
+
+        <form
+            method="get"
+            class="application-search-form"
+        >
+            <input
+                type="search"
+                name="query"
+                value="{{ query }}"
+                placeholder="Search company or position..."
+            >
+
+            <button type="submit">
+                Search
+            </button>
+        </form>
+
     </div>
+
+
+    <!-- APPLICATION LIST -->
 
     {% if applications %}
 
-        <div class="application-grid">
+        <div class="application-list">
 
             {% for application in applications %}
 
                 <a
                     href="{% url 'applications:application-detail' application.pk %}"
-                    class="application-card"
+                    class="application-list-item"
                 >
-                    <div class="application-card-header">
-                        <div>
-                            <h2>
-                                {{ application.position }}
-                            </h2>
 
-                            <p>
-                                {{ application.company }}
-                            </p>
-                        </div>
+                    <div class="application-main-info">
+                        <h3>
+                            {{ application.position }}
+                        </h3>
 
-                        <span class="status-badge">
+                        <p>
+                            {{ application.company }}
+                        </p>
+                    </div>
+
+
+                    <div class="application-location">
+                        <span>Location</span>
+
+                        <strong>
+                            {{ application.location|default:"Not provided" }}
+                        </strong>
+                    </div>
+
+
+                    <div class="application-date">
+                        <span>Applied</span>
+
+                        <strong>
+                            {% if application.applied_date %}
+                                {{ application.applied_date|date:"M j, Y" }}
+                            {% else %}
+                                Not provided
+                            {% endif %}
+                        </strong>
+                    </div>
+
+
+                    <div class="application-status">
+                        <span
+                            class="status-badge status-{{ application.status }}"
+                        >
                             {{ application.get_status_display }}
                         </span>
                     </div>
 
-                    {% if application.location %}
-                        <p>
-                            {{ application.location }}
-                        </p>
-                    {% endif %}
 
-                    {% if application.applied_date %}
-                        <p>
-                            Applied:
-                            {{ application.applied_date }}
-                        </p>
-                    {% endif %}
+                    <div class="application-arrow">
+                        →
+                    </div>
 
-                    <span class="view-details">
-                        View Details →
-                    </span>
                 </a>
 
             {% endfor %}
@@ -79,16 +231,17 @@
 
     {% else %}
 
-        <div class="empty-state">
-            <h2>No applications yet</h2>
+        <div class="application-empty-state">
+            <h2>No applications found</h2>
 
             <p>
-                Add your first job application to begin tracking your search.
+                Create your first application to begin tracking
+                your job search.
             </p>
 
             <a
                 href="{% url 'applications:application-create' %}"
-                class="primary-button"
+                class="application-primary-button"
             >
                 Create Application
             </a>

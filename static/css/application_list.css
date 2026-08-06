@@ -1,15 +1,479 @@
-.application-page {
-     background-color: #f5f5f5;
-     padding: 20px;
-     border-radius: 5px;
-     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-     margin-bottom: 20px;
- }
- 
- .application-page h2 {
-     color: #333;
- }
- 
- .application-page p {
-     color: #666;
- }
+/* ==========================================
+   VIEW APPLICATIONS PAGE
+========================================== */
+
+.application-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+
+    margin-bottom: 28px;
+}
+
+.application-heading h1 {
+    margin: 0 0 8px;
+
+    color: #ffffff;
+
+    font-size: clamp(34px, 5vw, 50px);
+    line-height: 1.1;
+}
+
+.application-heading p {
+    margin: 0;
+
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   APPLICATION STATISTICS
+========================================== */
+
+.application-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+
+    margin-bottom: 28px;
+}
+
+.application-stat-card {
+    position: relative;
+
+    padding: 24px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30, 41, 59, 0.98),
+            rgba(15, 23, 42, 0.98)
+        );
+
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-top: 4px solid #3b82f6;
+    border-radius: 16px;
+
+    box-shadow:
+        0 13px 32px rgba(0, 0, 0, 0.24);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.application-stat-card:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(96, 165, 250, 0.4);
+
+    box-shadow:
+        0 18px 38px rgba(0, 0, 0, 0.28);
+}
+
+.application-stat-card span {
+    display: block;
+
+    color: #94a3b8;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.application-stat-card strong {
+    display: block;
+
+    margin: 11px 0 8px;
+
+    color: #ffffff;
+
+    font-size: 40px;
+    line-height: 1;
+}
+
+.application-stat-card small {
+    color: #64748b;
+}
+
+.interview-stat {
+    border-top-color: #f59e0b;
+}
+
+.offer-stat {
+    border-top-color: #22c55e;
+}
+
+.rejected-stat {
+    border-top-color: #ef4444;
+}
+
+
+/* ==========================================
+   APPLICATION LIST PANEL
+========================================== */
+
+.application-list-panel {
+    padding: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30, 41, 59, 0.97),
+            rgba(15, 23, 42, 0.97)
+        );
+
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 19px;
+
+    box-shadow:
+        0 17px 42px rgba(0, 0, 0, 0.26);
+}
+
+.application-list-toolbar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+
+    margin-bottom: 24px;
+}
+
+.application-list-toolbar h2 {
+    margin: 0 0 6px;
+
+    color: #ffffff;
+
+    font-size: 26px;
+}
+
+.application-list-toolbar p {
+    margin: 0;
+
+    color: #64748b;
+}
+
+
+/* ==========================================
+   APPLICATION SEARCH
+========================================== */
+
+.application-search-form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.application-search-form input {
+    width: min(360px, 45vw);
+    height: 48px;
+    padding: 0 15px;
+
+    background: rgba(15, 23, 42, 0.96);
+    color: #ffffff;
+
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 10px;
+
+    font: inherit;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.application-search-form input::placeholder {
+    color: #64748b;
+}
+
+.application-search-form input:focus {
+    outline: none;
+
+    border-color: #3b82f6;
+
+    box-shadow:
+        0 0 0 4px rgba(59, 130, 246, 0.14);
+}
+
+.application-search-form button,
+.clear-search-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+    padding: 0 18px;
+
+    border-radius: 10px;
+
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.application-search-form button {
+    background: #2563eb;
+    color: #ffffff;
+
+    border: none;
+}
+
+.application-search-form button:hover {
+    background: #3b82f6;
+}
+
+.clear-search-button {
+    background: rgba(255, 255, 255, 0.07);
+    color: #cbd5e1;
+
+    border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.clear-search-button:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+
+/* ==========================================
+   DESKTOP COLUMN HEADINGS
+========================================== */
+
+.application-table-header {
+    display: grid;
+    grid-template-columns:
+        minmax(230px, 2fr)
+        minmax(140px, 1fr)
+        minmax(130px, 0.8fr)
+        minmax(110px, 0.7fr)
+        35px;
+
+    gap: 20px;
+
+    padding: 0 21px 12px;
+
+    color: #64748b;
+
+    font-size: 12px;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+/* ==========================================
+   APPLICATION ROWS
+========================================== */
+
+.application-list {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.application-list-item {
+    display: grid;
+    grid-template-columns:
+        minmax(230px, 2fr)
+        minmax(140px, 1fr)
+        minmax(130px, 0.8fr)
+        minmax(110px, 0.7fr)
+        35px;
+
+    align-items: center;
+    gap: 20px;
+
+    padding: 20px 21px;
+
+    background: rgba(15, 23, 42, 0.76);
+    color: inherit;
+
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: 13px;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.application-list-item:hover {
+    background: rgba(30, 41, 59, 0.98);
+
+    border-color: rgba(96, 165, 250, 0.48);
+
+    transform: translateX(4px);
+
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+.application-main-info {
+    min-width: 0;
+}
+
+.application-main-info h3 {
+    margin: 0 0 5px;
+
+    overflow: hidden;
+
+    color: #ffffff;
+
+    font-size: 17px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.application-main-info p {
+    margin: 0;
+
+    overflow: hidden;
+
+    color: #94a3b8;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.application-location,
+.application-date {
+    color: #cbd5e1;
+
+    font-size: 14px;
+}
+
+.application-arrow {
+    color: #60a5fa;
+
+    font-size: 23px;
+    text-align: right;
+}
+
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.application-empty-state {
+    padding: 65px 25px;
+
+    text-align: center;
+}
+
+.empty-state-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 17px;
+
+    background: rgba(59, 130, 246, 0.16);
+    color: #60a5fa;
+
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 50%;
+
+    font-size: 30px;
+}
+
+.application-empty-state h2 {
+    margin: 0 0 9px;
+}
+
+.application-empty-state p {
+    margin: 0 0 22px;
+
+    color: #94a3b8;
+}
+
+
+/* ==========================================
+   RESPONSIVE LIST
+========================================== */
+
+@media (max-width: 1050px) {
+    .application-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .application-table-header,
+    .application-list-item {
+        grid-template-columns:
+            minmax(220px, 2fr)
+            minmax(120px, 1fr)
+            minmax(110px, 0.8fr)
+            35px;
+    }
+
+    .application-table-header span:nth-child(2),
+    .application-location {
+        display: none;
+    }
+}
+
+@media (max-width: 750px) {
+    .application-heading,
+    .application-list-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .application-primary-button {
+        width: 100%;
+    }
+
+    .application-search-form {
+        flex-direction: column;
+    }
+
+    .application-search-form input,
+    .application-search-form button,
+    .clear-search-button {
+        width: 100%;
+    }
+
+    .application-table-header {
+        display: none;
+    }
+
+    .application-list-item {
+        grid-template-columns: 1fr auto;
+        gap: 12px;
+    }
+
+    .application-date,
+    .application-location {
+        display: none;
+    }
+
+    .application-status {
+        grid-column: 1;
+    }
+
+    .application-arrow {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+    }
+}
+
+@media (max-width: 520px) {
+    .application-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .application-list-panel {
+        padding: 17px;
+        border-radius: 14px;
+    }
+}

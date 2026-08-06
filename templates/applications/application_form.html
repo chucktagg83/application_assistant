@@ -1,46 +1,289 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
-    Application Form
+    {% if object %}
+        Edit Application
+    {% else %}
+        Create Application
+    {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+    <link 
+    rel="stylesheet" 
+    href="{% static 'css/application-form.css' %}"
+    >
+
+    <link
+    rel="stylesheet"
+    href="{% static 'css/application-shared.css' %}"
+    >
 {% endblock %}
 
 {% block content %}
 
-<section class="form-page">
+<section class="application-page">
 
-    <div class="application-form-card">
+    <nav class="application-tabs">
+        <a
+            href="{% url 'applications:application-list' %}"
+            class="application-tab"
+        >
+            View Applications
+        </a>
+
+        <a
+            href="{% url 'applications:application-create' %}"
+            class="application-tab active"
+        >
+            Create Application
+        </a>
+
+        {% if object %}
+            <a
+                href="{% url 'applications:application-detail' object.pk %}"
+                class="application-tab"
+            >
+                Application Details
+            </a>
+        {% else %}
+            <span class="application-tab disabled">
+                Application Details
+            </span>
+        {% endif %}
+    </nav>
+
+
+    <header class="application-form-heading">
+        <p class="application-eyebrow">
+            Application management
+        </p>
 
         {% if object %}
             <h1>Edit Application</h1>
+
+            <p>
+                Update the information for
+                {{ object.position }} at {{ object.company }}.
+            </p>
         {% else %}
             <h1>Create Application</h1>
+
+            <p>
+                Add a new opportunity and begin tracking its progress.
+            </p>
+        {% endif %}
+    </header>
+
+
+    <form
+        method="post"
+        class="job-application-form"
+    >
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="application-form-errors">
+                {{ form.non_field_errors }}
+            </div>
         {% endif %}
 
-        <form method="post">
-            {% csrf_token %}
 
-            {{ form.as_p }}
+        <section class="application-form-section">
 
-            <div class="form-actions">
+            <div class="form-section-heading">
+                <h2>Position Information</h2>
 
-                <button
-                    type="submit"
-                    class="primary-button"
-                >
-                    Save Application
-                </button>
+                <p>
+                    Enter the company and job details.
+                </p>
+            </div>
 
-                <a
-                    href="{% url 'applications:application-list' %}"
-                    class="secondary-button"
-                >
-                    Cancel
-                </a>
+            <div class="application-form-grid">
+
+                <div class="application-form-field">
+                    <label for="{{ form.company.id_for_label }}">
+                        Company
+                    </label>
+
+                    {{ form.company }}
+
+                    {% for error in form.company.errors %}
+                        <small class="field-error">
+                            {{ error }}
+                        </small>
+                    {% endfor %}
+                </div>
+
+
+                <div class="application-form-field">
+                    <label for="{{ form.position.id_for_label }}">
+                        Position
+                    </label>
+
+                    {{ form.position }}
+
+                    {% for error in form.position.errors %}
+                        <small class="field-error">
+                            {{ error }}
+                        </small>
+                    {% endfor %}
+                </div>
+
+
+                <div class="application-form-field">
+                    <label for="{{ form.status.id_for_label }}">
+                        Status
+                    </label>
+
+                    {{ form.status }}
+                </div>
+
+
+                <div class="application-form-field">
+                    <label for="{{ form.location.id_for_label }}">
+                        Location
+                    </label>
+
+                    {{ form.location }}
+                </div>
+
+
+                <div class="application-form-field">
+                    <label for="{{ form.salary.id_for_label }}">
+                        Salary
+                    </label>
+
+                    {{ form.salary }}
+                </div>
+
+
+                <div class="application-form-field">
+                    <label for="{{ form.job_url.id_for_label }}">
+                        Job Posting URL
+                    </label>
+
+                    {{ form.job_url }}
+                </div>
 
             </div>
-        </form>
 
-    </div>
+        </section>
+
+
+        <section class="application-form-section">
+
+            <div class="form-section-heading">
+                <h2>Dates and Follow-Up</h2>
+
+                <p>
+                    Record when you applied and when to follow up.
+                </p>
+            </div>
+
+            <div class="application-form-grid">
+
+                <div class="application-form-field">
+                    <label for="{{ form.applied_date.id_for_label }}">
+                        Applied Date
+                    </label>
+
+                    {{ form.applied_date }}
+                </div>
+
+
+                <div class="application-form-field">
+                    <label for="{{ form.follow_up_date.id_for_label }}">
+                        Follow-Up Date
+                    </label>
+
+                    {{ form.follow_up_date }}
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="application-form-section">
+
+            <div class="form-section-heading">
+                <h2>Contact Information</h2>
+
+                <p>
+                    Add recruiter or hiring manager information.
+                </p>
+            </div>
+
+            <div class="application-form-grid">
+
+                <div class="application-form-field">
+                    <label for="{{ form.contact_name.id_for_label }}">
+                        Contact Name
+                    </label>
+
+                    {{ form.contact_name }}
+                </div>
+
+
+                <div class="application-form-field">
+                    <label for="{{ form.contact_email.id_for_label }}">
+                        Contact Email
+                    </label>
+
+                    {{ form.contact_email }}
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="application-form-section">
+
+            <div class="form-section-heading">
+                <h2>Notes</h2>
+
+                <p>
+                    Record requirements, interview details, and next steps.
+                </p>
+            </div>
+
+            <div class="application-form-field full-width-field">
+                <label for="{{ form.notes.id_for_label }}">
+                    Application Notes
+                </label>
+
+                {{ form.notes }}
+            </div>
+
+        </section>
+
+
+        <div class="application-form-actions">
+
+            <button
+                type="submit"
+                class="save-application-button"
+            >
+                {% if object %}
+                    Save Changes
+                {% else %}
+                    Create Application
+                {% endif %}
+            </button>
+
+            <a
+                href="{% url 'applications:application-list' %}"
+                class="cancel-application-button"
+            >
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
 
 </section>
 
