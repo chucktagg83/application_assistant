@@ -1,0 +1,189 @@
+/* ===================================
+   PAGE TITLE
+=================================== */
+
+h1 {
+    text-align: center;
+    color: rgb(218, 193, 162);
+    margin-top: 35px;
+    margin-bottom: 10px;
+}
+
+
+/* ===================================
+   FORM LABELS
+=================================== */
+
+.sign-up-form label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: rgb(218, 193, 162);
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+/* ===================================
+   FORM FIELDS
+=================================== */
+
+.sign-up-form input,
+.sign-up-form select,
+.sign-up-form textarea {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    color: white;
+    background: rgba(255, 255, 255, 0.06);
+
+    border: 1px solid rgba(218, 193, 162, 0.30);
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    box-sizing: border-box;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+/* ===================================
+   FIELD FOCUS EFFECT
+=================================== */
+
+.sign-up-form input:focus,
+.sign-up-form select:focus,
+.sign-up-form textarea:focus {
+    outline: none;
+
+    border-color: rgb(218, 193, 162);
+
+    background: rgba(255, 255, 255, 0.10);
+
+    box-shadow:
+        0 0 0 3px rgba(218, 193, 162, 0.12);
+}
+
+
+/* ===================================
+   DJANGO HELP TEXT
+=================================== */
+
+.sign-up-form .helptext {
+    display: block;
+
+    margin-top: 6px;
+
+    color: rgba(255, 255, 255, 0.60);
+
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+
+/* Password requirement list */
+
+.sign-up-form ul {
+    margin-top: 8px;
+    margin-bottom: 0;
+
+    color: rgba(255, 255, 255, 0.60);
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* ===================================
+   DJANGO ERROR MESSAGES
+=================================== */
+
+.sign-up-form .errorlist {
+    margin: 5px 0;
+    padding-left: 20px;
+
+    color: #ff8a8a;
+
+    font-size: 14px;
+}
+
+
+/* ===================================
+   REGISTER BUTTON
+=================================== */
+
+.form-submit {
+    width: 100%;
+
+    padding: 14px 20px;
+
+    margin-top: 10px;
+
+    background: rgb(218, 193, 162);
+    color: rgb(20, 25, 35);
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+/* ===================================
+   BUTTON HOVER
+=================================== */
+
+.form-submit:hover {
+    transform: translateY(-2px);
+
+    background: rgb(235, 213, 185);
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.30);
+}
+
+
+/* ===================================
+   BUTTON CLICK
+=================================== */
+
+.form-submit:active {
+    transform: translateY(0);
+}
+
+
+/* ===================================
+   MOBILE
+=================================== */
+
+@media (max-width: 600px) {
+
+    .sign-up-form {
+        width: 94%;
+
+        margin: 20px auto;
+
+        padding: 22px;
+
+        gap: 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+}

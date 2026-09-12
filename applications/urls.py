@@ -46,4 +46,10 @@ urlpatterns = [
           views.resume_ai_view, 
           name="resume-ai",
     ),
+    
+    path ("register",
+          views.register_view, 
+          name="register"
+    )
+    
 ]

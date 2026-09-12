@@ -1,0 +1,401 @@
+/* ==========================================
+   APPLICATION DETAIL HEADER
+========================================== */
+
+
+.application-tabs {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 30px;
+    color: white;
+}
+
+.application-detail-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+
+    margin: 30px 0 26px;
+    padding: 32px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30, 41, 59, 0.98),
+            rgba(15, 23, 42, 0.98)
+        );
+
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 18px;
+
+    box-shadow:
+        0 16px 40px rgba(0, 0, 0, 0.26);
+}
+
+.application-detail-title {
+    min-width: 0;
+}
+
+.detail-company {
+    margin: 0 0 6px;
+
+    color: #60a5fa;
+
+    font-size: 18px;
+    font-weight: 750;
+}
+
+.application-detail-title h1 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.15;
+}
+
+.detail-header-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-top: 18px;
+}
+
+.detail-location {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 7px 12px;
+
+    background: rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
+
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 999px;
+
+    font-size: 13px;
+    font-weight: 650;
+}
+
+
+/* ==========================================
+   DETAIL ACTION BUTTONS
+========================================== */
+
+.detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.edit-application-button,
+.back-applications-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+    padding: 0 20px;
+
+    border-radius: 10px;
+
+    font-weight: 750;
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.edit-application-button {
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #3b82f6
+        );
+
+    color: #ffffff;
+}
+
+.edit-application-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 11px 25px rgba(37, 99, 235, 0.34);
+}
+
+.back-applications-button {
+    background: rgba(255, 255, 255, 0.07);
+    color: #dbeafe;
+
+    border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.back-applications-button:hover {
+    background: rgba(255, 255, 255, 0.12);
+
+    transform: translateY(-2px);
+}
+
+
+/* ==========================================
+   DETAIL CARD GRID
+========================================== */
+
+.application-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.application-detail-card {
+    padding: 27px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30, 41, 59, 0.96),
+            rgba(15, 23, 42, 0.96)
+        );
+
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 17px;
+
+    box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.23);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.application-detail-card:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(96, 165, 250, 0.38);
+
+    box-shadow:
+        0 18px 38px rgba(0, 0, 0, 0.26);
+}
+
+.detail-notes-card {
+    grid-column: 1 / -1;
+}
+
+
+/* ==========================================
+   DETAIL CARD HEADINGS
+========================================== */
+
+.detail-card-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+
+    margin-bottom: 23px;
+}
+
+.detail-card-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+
+    width: 36px;
+    height: 36px;
+
+    background: rgba(37, 99, 235, 0.18);
+    color: #60a5fa;
+
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 50%;
+
+    font-weight: 800;
+}
+
+.detail-card-heading h2 {
+    margin: 0 0 5px;
+
+    color: #ffffff;
+
+    font-size: 21px;
+}
+
+.detail-card-heading p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   DETAIL DATA ROWS
+========================================== */
+
+.detail-data-list {
+    margin: 0;
+}
+
+.detail-data-row {
+    display: grid;
+    grid-template-columns:
+        minmax(120px, 0.8fr)
+        minmax(0, 1.4fr);
+
+    gap: 18px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid rgba(148, 163, 184, 0.11);
+}
+
+.detail-data-row:first-child {
+    padding-top: 0;
+}
+
+.detail-data-row:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.detail-data-row dt {
+    color: #64748b;
+
+    font-size: 13px;
+    font-weight: 750;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.detail-data-row dd {
+    min-width: 0;
+    margin: 0;
+
+    color: #e2e8f0;
+
+    font-weight: 600;
+
+    overflow-wrap: anywhere;
+}
+
+.detail-data-row a {
+    color: #60a5fa;
+    text-decoration: none;
+}
+
+.detail-data-row a:hover {
+    text-decoration: underline;
+}
+
+.job-posting-link {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 8px 12px;
+
+    background: rgba(37, 99, 235, 0.14);
+    color: #93c5fd;
+
+    border: 1px solid rgba(59, 130, 246, 0.28);
+    border-radius: 8px;
+}
+
+
+/* ==========================================
+   APPLICATION NOTES
+========================================== */
+
+.detail-notes-content {
+    min-height: 120px;
+    padding: 20px;
+
+    background: rgba(15, 23, 42, 0.74);
+
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: 11px;
+
+    color: #cbd5e1;
+
+    line-height: 1.75;
+}
+
+.detail-notes-content p {
+    margin-top: 0;
+}
+
+.detail-notes-content p:last-child {
+    margin-bottom: 0;
+}
+
+.empty-detail-text {
+    color: #64748b;
+
+    font-style: italic;
+}
+
+
+/* ==========================================
+   RESPONSIVE DETAIL PAGE
+========================================== */
+
+@media (max-width: 850px) {
+    .application-detail-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .detail-actions {
+        width: 100%;
+    }
+
+    .edit-application-button,
+    .back-applications-button {
+        flex: 1;
+    }
+
+    .application-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-notes-card {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .application-detail-header,
+    .application-detail-card {
+        padding: 21px;
+    }
+
+    .detail-actions {
+        flex-direction: column;
+    }
+
+    .edit-application-button,
+    .back-applications-button {
+        width: 100%;
+    }
+
+    .detail-data-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .detail-header-meta {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

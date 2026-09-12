@@ -2,27 +2,41 @@ from datetime import timedelta
 import json
 from urllib import request
 
-from django.db.models import Count, Q
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.utils import timezone
-from django.db.models.functions import TruncMonth
-from django.views.generic import TemplateView
-
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count, Q
+from django.db.models.functions import TruncMonth
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import (CreateView, ListView, DetailView, UpdateView, DeleteView)
+from django.utils import timezone
+from django.views.generic import (
+    CreateView,
+    ListView,
+    DetailView,
+    UpdateView,
+    DeleteView,
+    TemplateView,
+)
 
-from .forms import JobApplicationForm, UserProfileForm, UserSettingsForm, ResumeAIForm
+from .forms import (
+    JobApplicationForm,
+    UserProfileForm,
+    UserSettingsForm,
+    ResumeAIForm,
+    RegisterForm,
+)
 
-from .services.resume_ai import (ResumeAIError, tailor_resume,)
+from .models import (
+    JobApplication,
+    UserSettings,
+)
 
-from .models import JobApplication, UserSettings
-from .models import UserSettings
-
+from .services.resume_ai import (
+    ResumeAIError,
+    tailor_resume,
+)
 # Create your views here.
 def home_page_view(request):
     """
@@ -587,3 +601,16 @@ def resume_ai_view(request):
         "applications/resume_ai.html",
         context,
     )
+
+# ------------------------------------    
+# -------- User Creation Form --------
+# ------------------------------------
+def register_view(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("applications:login")
+    else:
+        form = RegisterForm()
+    return render(request, "users/register.html", {"form": form})
